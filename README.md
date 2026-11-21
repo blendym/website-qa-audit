@@ -27,7 +27,7 @@ Enable any module on demand in your prompt:
 - **Launch Readiness & Real-World Edge Cases** — verifies 404 fallback pages, working `og:image` & favicons, intermediate laptop/tablet breakpoints, multilingual consistency (`<html lang>`, untranslated plugin errors), and client-side form validation without sending spam.
 - **Modular Regional Packs** (`references/regional/`) — region-specific legal and linguistic rules kept separate from the core checklist (currently includes `pl-eu.md` for Poland/EU; PRs welcome for other regions such as `de.md`, `uk.md`, `us.md`).
 - **Shareable Report Templates** (`templates/`) — output concisely in chat or export as Markdown (`report-template.md`) or print-ready HTML (`report-template.html`).
-- **Agent-Portable** — works with any browser-capable AI agent (Antigravity `browser` subagent, Playwright MCP, Chrome DevTools MCP, etc.).
+- **Agent-Portable** — follows the open `SKILL.md` standard; works with Claude Code, Codex, Hermes Agent, Antigravity, Cursor, and any other agent with browser access (Playwright MCP, Chrome DevTools MCP, or built-in browser tools).
 
 ## Installation
 
@@ -39,11 +39,18 @@ npx skills add blendym/website-qa-audit
 
 ### Manual Installation
 
-Clone this repository into your agent's skills directory:
+Clone or copy this repository into the skills directory for your agent:
 
-- **Antigravity (global)**: `~/.gemini/config/skills/website-qa-audit`
-- **Antigravity (workspace)**: `<project>/.agents/skills/website-qa-audit`
-- **Claude Code / Cursor / Codex**: copy into your respective `skills/` folder.
+| Agent | Global Path | Workspace / Project Path |
+| :--- | :--- | :--- |
+| **Universal / Cross-Agent** | `~/.agents/skills/website-qa-audit` | `<project>/.agents/skills/website-qa-audit` |
+| **Claude Code** | `~/.claude/skills/website-qa-audit` | `<project>/.claude/skills/website-qa-audit` |
+| **Codex** | `~/.codex/skills/website-qa-audit` | `<project>/.codex/skills/website-qa-audit` |
+| **Hermes Agent** | `~/.hermes/skills/website-qa-audit` | *or add `~/.agents/skills` to `skills.external_dirs` in `~/.hermes/config.yaml`* |
+| **Antigravity** | `~/.gemini/config/skills/website-qa-audit` | `<project>/.agents/skills/website-qa-audit` |
+| **Cursor** | `~/.cursor/skills/website-qa-audit` | `<project>/.cursor/skills/website-qa-audit` |
+
+> **Prerequisite:** Your agent needs a live browser tool (e.g. Playwright MCP, Chrome DevTools MCP, or a built-in browser tool).
 
 ## Example Prompts
 

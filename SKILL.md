@@ -51,7 +51,7 @@ Run these only when requested by the user (e.g. "deep audit + WCAG and performan
 ## Execution Workflow
 
 1. **Use a Real Browser**:
-   - Inspect the live rendered site using your browser tool or browser subagent (e.g. Antigravity `browser` subagent, Playwright MCP, or Chrome DevTools MCP).
+   - Inspect the live rendered site using your browser tool or browser subagent (e.g. Playwright MCP, Chrome DevTools MCP, or your agent's built-in browser tool/subagent).
    - Do **not** substitute `curl`, `wget`, or raw HTML scraping for live rendering and visual inspection.
    - Never bypass CAPTCHAs, login walls, or origin blocks; if blocked or unreachable, report it clearly and stop.
 2. **Run Deterministic JS Probes**:
