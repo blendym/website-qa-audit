@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website QA Audit Report — {{DOMAIN}}</title>
+  <style>
+    :root {
+      --bg: #f8f9fb;
+      --surface: #ffffff;
+      --text: #111827;
+      --muted: #4b5563;
+      --border: #e5e7eb;
+      --critical: #b91c1c;
+      --critical-bg: #fef2f2;
+      --ux: #b45309;
+      --ux-bg: #fffbeb;
+      --copy: #1d4ed8;
+      --copy-bg: #eff6ff;
+      --tech: #4338ca;
+      --tech-bg: #eef2ff;
+      --ok: #15803d;
+      --ok-bg: #f0fdf4;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 32px 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.55;
+      color: var(--text);
+      background: var(--bg);
+    }
+    .container { max-width: 960px; margin: 0 auto; }
+    header.report-header {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 28px 32px;
+      margin-bottom: 24px;
+    }
+    h1 { margin: 0 0 8px; font-size: 1.75rem; line-height: 1.2; }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .meta-item strong { display: block; color: var(--text); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .summary-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .summary-card .count { font-size: 1.65rem; font-weight: 700; line-height: 1.1; }
+    .summary-card .label { font-size: 0.82rem; color: var(--muted); margin-top: 4px; }
+    section.section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin-bottom: 20px;
+    }
+    section.section h2 {
+      margin: 0 0 16px;
+      font-size: 1.2rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+    }
+    .finding {
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-left-width: 4px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+    .finding.critical { border-left-color: var(--critical); }
+    .finding.ux { border-left-color: var(--ux); }
+    .finding.copy { border-left-color: var(--copy); }
+    .finding.tech { border-left-color: var(--tech); }
+    .finding.ok { border-left-color: var(--ok); background: var(--ok-bg); }
+    .finding-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .badge.critical { color: var(--critical); background: var(--critical-bg); }
+    .badge.ux { color: var(--ux); background: var(--ux-bg); }
+    .badge.copy { color: var(--copy); background: var(--copy-bg); }
+    .badge.tech { color: var(--tech); background: var(--tech-bg); }
+    .badge.ok { color: var(--ok); background: var(--ok-bg); }
+    .finding-title { font-weight: 600; font-size: 1rem; }
+    .finding-location { font-size: 0.85rem; color: var(--muted); margin-bottom: 6px; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.86em;
+      background: #f3f4f6;
+      padding: 1px 5px;
+      border-radius: 4px;
+    }
+    figure { margin: 12px 0 0; }
+    figure img { max-width: 100%; border: 1px solid var(--border); border-radius: 6px; }
+    figcaption { font-size: 0.8rem; color: var(--muted); margin-top: 4px; }
+    ul.checklist { padding-left: 20px; margin: 0; }
+    ul.checklist li { margin-bottom: 6px; }
+    @media print {
+      body { background: #ffffff; padding: 0; }
+      header.report-header, section.section, .summary-card { break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="report-header">
+      <h1>Website QA &amp; UX Audit — {{DOMAIN}}</h1>
+      <p style="margin: 0; color: var(--muted);">{{TARGET_URL}}</p>
+      <div class="meta-grid">
+        <div class="meta-item"><strong>Date</strong>{{AUDIT_DATE}}</div>
+        <div class="meta-item"><strong>Mode</strong>{{MODE}}</div>
+        <div class="meta-item"><strong>Viewports</strong>1440x900, 1280x720, 390x844</div>
+        <div class="meta-item"><strong>Optional Modules</strong>{{OPTIONAL_MODULES}}</div>
+      </div>
+    </header>
+
+    <div class="summary-grid">
+      <div class="summary-card"><div class="count" style="color: var(--critical);">{{CRITICAL_COUNT}}</div><div class="label">Critical</div></div>
+      <div class="summary-card"><div class="count" style="color: var(--ux);">{{UX_COUNT}}</div><div class="label">UI/UX &amp; Visual</div></div>
+      <div class="summary-card"><div class="count" style="color: var(--copy);">{{COPY_COUNT}}</div><div class="label">Content &amp; Copy</div></div>
+      <div class="summary-card"><div class="count" style="color: var(--tech);">{{TECH_COUNT}}</div><div class="label">Technical &amp; SEO</div></div>
+    </div>
+
+    <section class="section">
+      <h2>1. Critical (Functional, Contact, Legal)</h2>
+      <div class="finding critical">
+        <div class="finding-header">
+          <span class="badge critical">Critical</span>
+          <span class="finding-title">{{ISSUE_TITLE}}</span>
+        </div>
+        <div class="finding-location">{{PAGE_URL}} · {{VIEWPORT}}</div>
+        <p style="margin: 0;">{{ISSUE_DESCRIPTION}}</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>2. UI/UX &amp; Visual Issues</h2>
+      <div class="finding ux">
+        <div class="finding-header">
+          <span class="badge ux">UI/UX</span>
+          <span class="finding-title">{{ISSUE_TITLE}}</span>
+        </div>
+        <div class="finding-location">{{PAGE_URL}} · {{VIEWPORT}} · <code>{{SELECTOR}}</code></div>
+        <p style="margin: 0;">{{ISSUE_DESCRIPTION}}</p>
+        <!-- Optional screenshot slot:
+        <figure>
+          <img src="{{SCREENSHOT_PATH}}" alt="{{ISSUE_TITLE}}">
+          <figcaption>{{SCREENSHOT_CAPTION}}</figcaption>
+        </figure>
+        -->
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>3. Content &amp; Copy Issues</h2>
+      <div class="finding copy">
+        <div class="finding-header">
+          <span class="badge copy">Copy</span>
+          <span class="finding-title">{{PAGE_URL}}</span>
+        </div>
+        <p style="margin: 0;">{{COPY_FINDINGS}}</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>4. Technical &amp; SEO</h2>
+      <div class="finding tech">
+        <div class="finding-header">
+          <span class="badge tech">Tech / SEO</span>
+          <span class="finding-title">{{ISSUE_TITLE}}</span>
+        </div>
+        <p style="margin: 0;">{{TECH_FINDINGS}}</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>5. Quick Wins / Developer Checklist</h2>
+      <ul class="checklist">
+        <li>[ ] {{ACTION_ITEM}}</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>6. What Works Well</h2>
+      <div class="finding ok">
+        <p style="margin: 0;">{{POSITIVE_SUMMARY}}</p>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
